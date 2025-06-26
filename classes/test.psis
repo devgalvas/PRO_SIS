@@ -1,0 +1,8 @@
+programa teste {
+    declare inteiro a, real b, termo x, termo y;
+
+    sistema {
+        2 * x + 3 * y = 10,
+        x - 5 * y = 2
+    }
+}

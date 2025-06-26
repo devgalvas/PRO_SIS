@@ -1,0 +1,37 @@
+// ------------------------------------------------------------------
+// pro_sis_gramatica.lark
+//
+// Gramática da linguagem PRO-SIS usando Lark
+// ------------------------------------------------------------------
+
+// Regra Inicial
+start: programa
+
+// Estrutura do programa
+programa: "programa" ID "{" declaracao sistema "}"
+
+// Declarações
+declaracao: "declare" _var ("," _var)* ";"
+
+// Sistemas de equações
+sistema: "sistema" "{" equacao ("," equacao)* "}"
+
+// Variaveis e Tipos
+_var: _tipo ID
+_tipo: "inteiro" | "real" | "termo"
+
+// Equações
+equacao: termo "=" termo
+
+// Termos e Expressões
+termo: expr (("+" | "-") expr)*
+expr: fator (("*" | "/") fator)*
+fator: NUMERO | ID | "(" termo ")"
+
+// Tokens terminais 
+ID: /[a-zA-Z_][a-zA-Z0-9_]*/
+NUMERO: /(\d+(\. \d*)?|\. \d+)/ 
+
+// para ignorar espaços em braco e tabulações
+%import common.WS
+%ignore WS
