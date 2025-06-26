@@ -43,8 +43,8 @@ python3 --version
 Clone o repositório e acesse a pasta:
 
 ```bash
-git clone <URL_DO_REPOSITORIO>
-cd pro-sis-interpreter
+git clone git@github.com:devgalvas/PRO_SIS.git
+cd classes
 ```
 
 Instale a dependência:
