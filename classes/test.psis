@@ -1,8 +1,12 @@
-programa teste {
-    declare inteiro a, real b, termo x, termo y;
+sis meu_sistema = { 
+    [2, 1, -1, 8],
+    [-3, -1, 2, -11],
+    [-2, 1, 2, -3]
+};
 
-    sistema {
-        2 * x + 3 * y = 10,
-        x - 5 * y = 2
-    }
-}
+int n1 = 10;
+
+solve meu_sistema end
+det meu_sistema end
+inv meu_sistema end
+trans meu_sistema end
