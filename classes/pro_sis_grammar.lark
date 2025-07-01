@@ -1,37 +1,28 @@
-// ------------------------------------------------------------------
-// pro_sis_gramatica.lark
-//
-// Gramática da linguagem PRO-SIS usando Lark
-// ------------------------------------------------------------------
+// ----------------- Regra Principal do Programa -----------------
+programa: declaracao* comando*
 
-// Regra Inicial
-start: programa
+// ----------------- Comandos (Funções) -----------------
+// A regra 'func' foi substituída pelo Token nomeado 'FUNC'.
+comando: FUNC ID "end"
 
-// Estrutura do programa
-programa: "programa" ID "{" declaracao sistema "}"
+// ----------------- Declarações com Inicialização -----------------
+declaracao: TIPO ID "=" valor ";"
 
-// Declarações
-declaracao: "declare" _var ("," _var)* ";"
+// O valor pode ser um número, uma equação ou um sistema
+valor: expressao_numerica | equacao | sistema
 
-// Sistemas de equações
-sistema: "sistema" "{" equacao ("," equacao)* "}"
+// ----------------- Definição de Sistema e Equação -----------------
+sistema: "{" equacao ("," equacao)* "}"
+equacao: "[" expressao_numerica ("," expressao_numerica)* "]"
 
-// Variaveis e Tipos
-_var: _tipo ID
-_tipo: "inteiro" | "real" | "termo"
+// ----------------- Terminais (Tokens) -----------------
+expressao_numerica: NUMERO
 
-// Equações
-equacao: termo "=" termo
+TIPO: "int" | "float" | "eq" | "sis"
+FUNC: "solve" | "det" | "inv" | "trans" | "retP" | "retL" | "retD" | "retU"
 
-// Termos e Expressões
-termo: expr (("+" | "-") expr)*
-expr: fator (("*" | "/") fator)*
-fator: NUMERO | ID | "(" termo ")"
+ID: /[a-zA-Z_]\w*/
+NUMERO: /-?\d+(\.\d+)?/
 
-// Tokens terminais 
-ID: /[a-zA-Z_][a-zA-Z0-9_]*/
-NUMERO: /(\d+(\. \d*)?|\. \d+)/ 
-
-// para ignorar espaços em braco e tabulações
 %import common.WS
 %ignore WS
