@@ -1,0 +1,17 @@
+sis meu_sistema = {
+    [2, 1, 1, 1],
+    [4, 3, 3, 1],
+    [8, 7, 9, -1]
+}
+
+int x = 10
+
+solve meu_sistema end
+
+det meu_sistema end
+
+inv meu_sistema end
+
+sis outro_sistema = { [1, 2], [3, 4] }
+
+trans outro_sistema end
