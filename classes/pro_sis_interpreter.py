@@ -297,8 +297,107 @@ class ProSisInterpreter(Transformer):
             raise Exception(f"Erro Semântico: A variável '{nome_var_principal}' não foi definida.")
 
         print(f"\n-=-=- Executando '{nome_funcao}' no sistema '{nome_var_principal}' -=-=-")
-        valor_da_var = self.vars[nome_var_principal]['valor']
-        print(valor_da_var.T if nome_funcao == 'trans' else valor_da_var)
+        
+        # Verificar se é um sistema válido
+        if self.vars[nome_var_principal]['tipo'] != 'sis':
+            raise Exception(f"Erro: A função '{nome_funcao}' requer uma variável do tipo 'sis'.")
+        
+        matriz_aumentada = self.vars[nome_var_principal]['valor']
+        
+        try:
+            if nome_funcao == 'solve':
+                # Para solve, assumir que é matriz aumentada [A|b]
+                if matriz_aumentada.shape[1] < 2:
+                    raise Exception("Erro: Matriz deve ter pelo menos 2 colunas para resolução de sistema.")
+                A = matriz_aumentada[:, :-1]  # Todas as colunas exceto a última
+                b = matriz_aumentada[:, -1]   # Última coluna (termos independentes)
+                if A.shape[0] != A.shape[1]:
+                    raise Exception("Erro: Para resolver o sistema, a matriz de coeficientes deve ser quadrada.")
+                solucao = np.linalg.solve(A, b)
+                print("Solução do sistema:")
+                print(solucao)
+                
+            elif nome_funcao == 'det':
+                # Para determinante, usar toda a matriz se for quadrada, ou só os coeficientes se for aumentada
+                if matriz_aumentada.shape[0] == matriz_aumentada.shape[1]:
+                    # Matriz já é quadrada
+                    A = matriz_aumentada
+                else:
+                    # Matriz aumentada - usar só os coeficientes
+                    A = matriz_aumentada[:, :-1]
+                    if A.shape[0] != A.shape[1]:
+                        raise Exception("Erro: Para calcular determinante, a matriz de coeficientes deve ser quadrada.")
+                determinante = np.linalg.det(A)
+                print(f"Determinante: {determinante}")
+                
+            elif nome_funcao == 'inv':
+                # Para inversa, usar toda a matriz se for quadrada, ou só os coeficientes se for aumentada
+                if matriz_aumentada.shape[0] == matriz_aumentada.shape[1]:
+                    A = matriz_aumentada
+                else:
+                    A = matriz_aumentada[:, :-1]
+                    if A.shape[0] != A.shape[1]:
+                        raise Exception("Erro: Para calcular a inversa, a matriz de coeficientes deve ser quadrada.")
+                inversa = np.linalg.inv(A)
+                print("Matriz inversa:")
+                print(inversa)
+                
+            elif nome_funcao == 'trans':
+                # Para transposta, usar toda a matriz
+                transposta = matriz_aumentada.T
+                print("Matriz transposta:")
+                print(transposta)
+                
+            elif nome_funcao == 'retP':
+                if matriz_aumentada.shape[0] == matriz_aumentada.shape[1]:
+                    A = matriz_aumentada
+                else:
+                    A = matriz_aumentada[:, :-1]
+                    if A.shape[0] != A.shape[1]:
+                        raise Exception("Erro: Para decomposição LU, a matriz de coeficientes deve ser quadrada.")
+                P, L, U = lu(A)
+                print("Matriz P (permutação):")
+                print(P)
+                
+            elif nome_funcao == 'retL':
+                if matriz_aumentada.shape[0] == matriz_aumentada.shape[1]:
+                    A = matriz_aumentada
+                else:
+                    A = matriz_aumentada[:, :-1]
+                    if A.shape[0] != A.shape[1]:
+                        raise Exception("Erro: Para decomposição LU, a matriz de coeficientes deve ser quadrada.")
+                P, L, U = lu(A)
+                print("Matriz L (triangular inferior):")
+                print(L)
+                
+            elif nome_funcao == 'retU':
+                if matriz_aumentada.shape[0] == matriz_aumentada.shape[1]:
+                    A = matriz_aumentada
+                else:
+                    A = matriz_aumentada[:, :-1]
+                    if A.shape[0] != A.shape[1]:
+                        raise Exception("Erro: Para decomposição LU, a matriz de coeficientes deve ser quadrada.")
+                P, L, U = lu(A)
+                print("Matriz U (triangular superior):")
+                print(U)
+                
+            elif nome_funcao == 'retD':
+                if matriz_aumentada.shape[0] == matriz_aumentada.shape[1]:
+                    A = matriz_aumentada
+                else:
+                    A = matriz_aumentada[:, :-1]
+                    if A.shape[0] != A.shape[1]:
+                        raise Exception("Erro: Para extrair diagonal, a matriz de coeficientes deve ser quadrada.")
+                diagonal = np.diag(np.diag(A))
+                print("Matriz diagonal:")
+                print(diagonal)
+                
+            else:
+                raise Exception(f"Erro: Função '{nome_funcao}' não reconhecida.")
+                
+        except np.linalg.LinAlgError as e:
+            raise Exception(f"Erro de Álgebra Linear: {e} (matriz pode ser singular)")
+        
 
 
     def TK_OPE_ATB(self, token):
