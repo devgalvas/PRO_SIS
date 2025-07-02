@@ -1,0 +1,19 @@
+int x = 10
+
+eq vetor = [1, 2, 3]
+
+sis sistema_valido = {[2, 1, 5], [1, -1, 1]}
+
+solve sistema_valido end
+
+inv sistema_valido end
+
+det sistema_valido end
+
+sis matriz_quadrada = {[3, 2], [1, 4]}
+
+det matriz_quadrada end
+
+inv matriz_quadrada end
+
+trans matriz_quadrada end

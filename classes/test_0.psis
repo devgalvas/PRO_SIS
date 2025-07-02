@@ -1,0 +1,3 @@
+eq eq = [1, 2, 3]
+
+solve eq end
