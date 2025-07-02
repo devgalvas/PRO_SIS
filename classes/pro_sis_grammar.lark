@@ -2,7 +2,7 @@
 programa: (declaracao | comando)*
 
 // ----------------- Comandos e Funções -----------------
-comando: funcao_comando ID+ end_comando 
+comando: funcao_comando (ID | sistema) end_comando 
 declaracao: tipo_declaracao ID TK_OPE_ATB valor 
 valor: TK_NUMERO | equacao | sistema | ID | funcao_chamada
 funcao_chamada: funcao_retorno "(" ID ")"
