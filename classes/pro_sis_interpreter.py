@@ -82,7 +82,7 @@ class ProSisInterpreter(Transformer):
         Args:
             tipo_token: Token contendo o tipo da variável (int, float, eq, sis)
             nome_var_token: Token contendo o nome da variável
-            operador_token: Token do operador de atribuição (:=)
+            operador_token: Token do operador de atribuição (=)
             valor: Valor a ser atribuído (pode ser Token, lista, np.ndarray, etc.)
             
         Raises:
