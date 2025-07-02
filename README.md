@@ -324,7 +324,7 @@ Este projeto está sob a licença MIT. Veja o arquivo `LICENSE` para mais detalh
 
 Para dúvidas, sugestões ou colaborações:
 
-- 📧 Email: [ d2023001147@unifei.edu.br, d2023005351@unifei.edu.br, d2022014991@unifei.edu.br, 2023008774@unifei.edu.br]
+- 📧 Email: [ d2023001147@unifei.edu.br, d2023005351@unifei.edu.br, d2022014991@unifei.edu.br, d2023008774@unifei.edu.br]
 - 🎓 Instituição: UNIFEI - Universidade Federal de Itajubá
 - 📚 Disciplina: Compiladores
 
