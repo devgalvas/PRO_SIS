@@ -1,37 +1,63 @@
-// ------------------------------------------------------------------
-// pro_sis_gramatica.lark
-//
-// Gramática da linguagem PRO-SIS usando Lark
-// ------------------------------------------------------------------
+// ----------------- Regra Principal do Programa -----------------
+programa: (declaracao | comando)*
 
-// Regra Inicial
-start: programa
+// ----------------- Comandos e Funções -----------------
+comando: funcao_comando ID+ end_comando 
+declaracao: tipo_declaracao ID TK_OPE_ATB valor 
+valor: TK_NUMERO | equacao | sistema | ID | funcao_chamada
+funcao_chamada: funcao_retorno "(" ID ")"
 
-// Estrutura do programa
-programa: "programa" ID "{" declaracao sistema "}"
+// --- Regras de agrupamento para clareza ---
+// Agrupa todos os possíveis tokens de tipo
+tipo_declaracao: TK_TYPE_INT | TK_TYPE_FLOAT | TK_TYPE_EQ | TK_TYPE_SIS
 
-// Declarações
-declaracao: "declare" _var ("," _var)* ";"
+// Agrupa os tokens de função que são usados em comandos
+funcao_comando: TK_FUNC_SOLVE | TK_FUNC_DET | TK_FUNC_INV | TK_FUNC_TRANS | TK_FUNC_RETP | TK_FUNC_RETL | TK_FUNC_RETU | TK_FUNC_RETD
 
-// Sistemas de equações
-sistema: "sistema" "{" equacao ("," equacao)* "}"
+// Agrupa os tokens de função que são usados em chamadas que retornam valor
+funcao_retorno: TK_FUNC_SOLVE | TK_FUNC_DET | TK_FUNC_INV | TK_FUNC_TRANS | TK_FUNC_RETP | TK_FUNC_RETL | TK_FUNC_RETU | TK_FUNC_RETD
 
-// Variaveis e Tipos
-_var: _tipo ID
-_tipo: "inteiro" | "real" | "termo"
+// Token para a palavra 'end'
+end_comando: TK_DELIM_END
 
-// Equações
-equacao: termo "=" termo
+// ----------------- Estruturas de Dados -----------------
+sistema: TK_DELIM_INIT_SISTEMA equacao (TK_DELIM_MULT equacao)* TK_DELIM_END_SISTEMA
+equacao: TK_DELIM_INIT_EQ TK_NUMERO (TK_DELIM_MULT TK_NUMERO)* TK_DELIM_END_EQ
 
-// Termos e Expressões
-termo: expr (("+" | "-") expr)*
-expr: fator (("*" | "/") fator)*
-fator: NUMERO | ID | "(" termo ")"
+// ----------------- Terminais (Tokens) -----------------
+// Tipos de Variáveis
+TK_TYPE_INT: "int"
+TK_TYPE_FLOAT: "float"
+TK_TYPE_EQ: "eq"
+TK_TYPE_SIS: "sis"
 
-// Tokens terminais 
-ID: /[a-zA-Z_][a-zA-Z0-9_]*/
-NUMERO: /(\d+(\. \d*)?|\. \d+)/ 
+// Funções
+TK_FUNC_SOLVE: "solve"
+TK_FUNC_DET: "det"
+TK_FUNC_INV: "inv"
+TK_FUNC_TRANS: "trans"
+TK_FUNC_RETP: "retP"
+TK_FUNC_RETL: "retL"
+TK_FUNC_RETU: "retU"
+TK_FUNC_RETD: "retD"
 
-// para ignorar espaços em braco e tabulações
+// Operador e Delimitadores
+TK_OPE_ATB: "="
+TK_DELIM_INIT_SISTEMA: "{"
+TK_DELIM_END_SISTEMA: "}"
+TK_DELIM_INIT_EQ: "["
+TK_DELIM_END_EQ: "]"
+TK_DELIM_END: "end"
+TK_DELIM_MULT: ","
+// Os parênteses são tratados como literais anônimos
+
+// Nomenclatura
+ID: /[a-zA-Z_]\w*/
+TK_NUMERO: /-?\d+(\.\d+)?/
+
+// ----------------- Diretivas do Parser -----------------
 %import common.WS
 %ignore WS
+
+COMMENT: /\/\/[^\n]*/
+%ignore COMMENT
