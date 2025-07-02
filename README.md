@@ -80,7 +80,7 @@ Este projeto foi desenvolvido como trabalho prático da disciplina de **Compilad
 
 1. **Clone o repositório**
    ```bash
-   git clone <https://github.com/devgalvas/PRO_SIS.git>
+   git clone https://github.com/devgalvas/PRO_SIS.git
    cd compiladores/PRO_SIS
    ```
 
