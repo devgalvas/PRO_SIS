@@ -227,7 +227,7 @@ class ProSisInterpreter(Transformer):
             
         Returns:
             np.ndarray or float: Resultado da operação matemática
-            
+             1.00000000e+00 -5.92118946e-16 -1.00000000e
         Raises:
             Exception: Se a variável não for do tipo 'sis', matriz não for quadrada
                       (quando necessário), ou ocorrer erro de álgebra linear
@@ -298,7 +298,6 @@ class ProSisInterpreter(Transformer):
 
         print(f"\n-=-=- Executando '{nome_funcao}' no sistema '{nome_var_principal}' -=-=-")
         
-        # Verificar se é um sistema válido
         if self.vars[nome_var_principal]['tipo'] != 'sis':
             raise Exception(f"Erro: A função '{nome_funcao}' requer uma variável do tipo 'sis'.")
         
@@ -306,11 +305,10 @@ class ProSisInterpreter(Transformer):
         
         try:
             if nome_funcao == 'solve':
-                # Para solve, assumir que é matriz aumentada [A|b]
                 if matriz_aumentada.shape[1] < 2:
                     raise Exception("Erro: Matriz deve ter pelo menos 2 colunas para resolução de sistema.")
-                A = matriz_aumentada[:, :-1]  # Todas as colunas exceto a última
-                b = matriz_aumentada[:, -1]   # Última coluna (termos independentes)
+                A = matriz_aumentada[:, :-1]  
+                b = matriz_aumentada[:, -1]  
                 if A.shape[0] != A.shape[1]:
                     raise Exception("Erro: Para resolver o sistema, a matriz de coeficientes deve ser quadrada.")
                 solucao = np.linalg.solve(A, b)
@@ -318,12 +316,9 @@ class ProSisInterpreter(Transformer):
                 print(solucao)
                 
             elif nome_funcao == 'det':
-                # Para determinante, usar toda a matriz se for quadrada, ou só os coeficientes se for aumentada
                 if matriz_aumentada.shape[0] == matriz_aumentada.shape[1]:
-                    # Matriz já é quadrada
                     A = matriz_aumentada
                 else:
-                    # Matriz aumentada - usar só os coeficientes
                     A = matriz_aumentada[:, :-1]
                     if A.shape[0] != A.shape[1]:
                         raise Exception("Erro: Para calcular determinante, a matriz de coeficientes deve ser quadrada.")
@@ -331,7 +326,6 @@ class ProSisInterpreter(Transformer):
                 print(f"Determinante: {determinante}")
                 
             elif nome_funcao == 'inv':
-                # Para inversa, usar toda a matriz se for quadrada, ou só os coeficientes se for aumentada
                 if matriz_aumentada.shape[0] == matriz_aumentada.shape[1]:
                     A = matriz_aumentada
                 else:
@@ -343,7 +337,6 @@ class ProSisInterpreter(Transformer):
                 print(inversa)
                 
             elif nome_funcao == 'trans':
-                # Para transposta, usar toda a matriz
                 transposta = matriz_aumentada.T
                 print("Matriz transposta:")
                 print(transposta)
