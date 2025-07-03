@@ -1,0 +1,16 @@
+------- Análise Léxica (Tokens Reconhecidos) --------
+Linha: 1, Coluna: 1, Código: TK_TYPE_EQ, Lexema: 'eq'
+Linha: 1, Coluna: 4, Código: TK_TYPE_EQ, Lexema: 'eq'
+Linha: 1, Coluna: 7, Código: TK_OPE_ATB, Lexema: '='
+Linha: 1, Coluna: 9, Código: TK_DELIM_INIT_EQ, Lexema: '['
+Linha: 1, Coluna: 10, Código: TK_NUMERO, Lexema: '1'
+Linha: 1, Coluna: 11, Código: TK_DELIM_MULT, Lexema: ','
+Linha: 1, Coluna: 13, Código: TK_NUMERO, Lexema: '2'
+Linha: 1, Coluna: 14, Código: TK_DELIM_MULT, Lexema: ','
+Linha: 1, Coluna: 16, Código: TK_NUMERO, Lexema: '3'
+Linha: 1, Coluna: 17, Código: TK_DELIM_END_EQ, Lexema: ']'
+Linha: 3, Coluna: 1, Código: TK_FUNC_SOLVE, Lexema: 'solve'
+Linha: 3, Coluna: 7, Código: TK_TYPE_EQ, Lexema: 'eq'
+Linha: 3, Coluna: 10, Código: TK_DELIM_END, Lexema: 'end'
+---------------------------------------------------
+
