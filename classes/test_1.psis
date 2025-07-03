@@ -1,10 +1,25 @@
-
 sis meu_sistema = {
     [2, 1, 1, 1],
     [4, 3, 3, 1],
     [8, 7, 9, -1]
 }
 
+int num1 = 24
+
+float num2 = 2.76
+
+eq eq1 = [1, 2, 6, 65]
+
 solve meu_sistema end
 
 inv meu_sistema end
+
+trans meu_sistema end 
+
+retP meu_sistema end
+
+retL meu_sistema end
+
+retU meu_sistema end
+
+retD meu_sistema end
